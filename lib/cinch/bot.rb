@@ -223,6 +223,8 @@ module Cinch
     # @param [String] message The quit message to send while quitting
     # @return [void]
     def quit(message = nil)
+      @irc.send "PRIVMSG #{@channels.first} :#{message}"
+      
       @quitting = true
       command   = message ? "QUIT :#{message}" : "QUIT"
 
