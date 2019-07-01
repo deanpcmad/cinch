@@ -8,6 +8,5 @@ Gem::Specification.new do |s|
   s.homepage = 'http://cinchrb.org'
   s.required_ruby_version = '>= 1.9.1'
   s.files = Dir['LICENSE', 'README.md', '.yardopts', '{docs,lib,examples}/**/*']
-  s.has_rdoc = "yard"
   s.license = "MIT"
 end
