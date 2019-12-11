@@ -113,7 +113,6 @@ module Cinch
     # @since 2.0.0
     def send_cap_req
       send "CAP REQ :twitch.tv/commands"
-      send "CAP REQ :twitch.tv/membership"
       send "CAP REQ :twitch.tv/tags USERNOTICE"
       
       #caps = [:"away-notify", :"multi-prefix", :sasl, :"twitch.tv/tags"] & @network.capabilities
