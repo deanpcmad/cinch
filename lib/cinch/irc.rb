@@ -113,6 +113,7 @@ module Cinch
     # @since 2.0.0
     def send_cap_req
       send "CAP REQ :twitch.tv/commands"
+      send "CAP REQ :twitch.tv/membership"
       send "CAP REQ :twitch.tv/tags USERNOTICE"
       
       #caps = [:"away-notify", :"multi-prefix", :sasl, :"twitch.tv/tags"] & @network.capabilities
@@ -139,7 +140,8 @@ module Cinch
     def send_login
       send "PASS #{@bot.config.password}" if @bot.config.password
       send "NICK #{@bot.generate_next_nick!}"
-      send "USER #{@bot.config.user} 0 * :#{@bot.config.realname}"
+      # Twitch does not require or accept USER
+      # send "USER #{@bot.config.user} 0 * :#{@bot.config.realname}"
     end
 
     # @api private
@@ -245,7 +247,7 @@ module Cinch
         end
       end
 
-      if ["PRIVMSG", "NOTICE"].include?(msg.command)
+      if ["PRIVMSG", "NOTICE", "WHISPER"].include?(msg.command)
         events << [:ctcp] if msg.ctcp?
         if msg.channel?
           events << [:channel]
@@ -254,6 +256,10 @@ module Cinch
         end
 
         if msg.command == "PRIVMSG"
+          events << [:message]
+        end
+
+        if msg.command == "WHISPER"
           events << [:message]
         end
 

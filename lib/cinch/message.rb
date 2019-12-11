@@ -196,6 +196,10 @@ module Cinch
         text = text.split("\n").map {|l| "#{user.nick}: #{l}"}.join("\n")
       end
 
+      if @command.eql? "WHISPER"
+        text = "/w #{@user} " << text
+      end
+
       reply_target.send(text)
     end
 
@@ -249,6 +253,10 @@ module Cinch
 
     private
     def reply_target
+      if @command.eql? "WHISPER"
+        return Target.new('#jtv', @bot)
+      end
+      
       if @channel.nil? || @statusmsg_mode.nil?
         return @target
       end

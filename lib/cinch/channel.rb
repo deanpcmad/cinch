@@ -227,11 +227,12 @@ module Cinch
       unsync :modes
       unsync :owners
 
-      if @bot.irc.isupport["WHOX"]
-        @bot.irc.send "WHO #@name %acfhnru"
-      else
-        @bot.irc.send "WHO #@name"
-      end
+      # Twitch does not support WHO command
+      # if @bot.irc.isupport["WHOX"]
+      #   @bot.irc.send "WHO #@name %acfhnru"
+      # else
+      #   @bot.irc.send "WHO #@name"
+      # end
       @bot.irc.send "MODE #@name +b" # bans
       @bot.irc.send "MODE #@name"
       if @bot.irc.network.owner_list_mode
