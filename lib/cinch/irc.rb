@@ -141,7 +141,7 @@ module Cinch
       send "PASS #{@bot.config.password}" if @bot.config.password
       send "NICK #{@bot.generate_next_nick!}"
       # Twitch does not require or accept USER
-      # send "USER #{@bot.config.user} 0 * :#{@bot.config.realname}"
+      send "USER #{@bot.config.user} 0 * :#{@bot.config.realname}"
     end
 
     # @api private
@@ -247,7 +247,7 @@ module Cinch
         end
       end
 
-      if ["PRIVMSG", "NOTICE", "WHISPER"].include?(msg.command)
+      if ["PRIVMSG", "NOTICE"].include?(msg.command)
         events << [:ctcp] if msg.ctcp?
         if msg.channel?
           events << [:channel]
@@ -259,9 +259,9 @@ module Cinch
           events << [:message]
         end
 
-        if msg.command == "WHISPER"
-          events << [:message]
-        end
+        # if msg.command == "WHISPER"
+        #   events << [:message]
+        # end
 
         if msg.action?
           events << [:action]
