@@ -30,7 +30,8 @@ module Cinch
           encoding = "UTF-8"
         end
 
-        return string.encode!(encoding, {:invalid => :replace, :undef => :replace}).force_encoding("ASCII-8BIT")
+        details = {:invalid => :replace, :undef => :replace}
+        return string.encode!(encoding, **details).force_encoding("ASCII-8BIT")
       end
     end
   end
